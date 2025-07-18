@@ -1,6 +1,5 @@
 @extends('backoffice.layouts.app')
-@section('breadcrumb', 'Manajemen Pengguna')
-@section('title', 'Data Pengguna')
+@section('breadcrumb', 'Manajemen Event')
 
 @section('content')
     @if (session('success'))
@@ -27,20 +26,20 @@
         <div class="max-w-7xl mx-auto">
         <div class="bg-white shadow-soft-xl rounded-2xl p-6">
             <div class="flex justify-between items-center mb-4">
-            <h6 class="text-lg font-semibold text-slate-700">Data Pengguna</h6>
-            <a href="{{ route('backoffice.users.create') }}" class="inline-block px-4 py-2 text-white bg-blue-500 rounded shadow hover:bg-blue-600">Tambah Pengguna</a>
+            <h6 class="text-lg font-semibold text-slate-700">Data Event</h6>
+            <a href="{{ route('backoffice.events.create') }}" class="inline-block px-4 py-2 text-white bg-blue-500 rounded shadow hover:bg-blue-600">Tambah Event</a>
             </div>
     
             <div class="overflow-x-auto rounded-xl">
             <div id="alert-container"></div>
-            <table id="users-table" class="min-w-full table-auto border border-slate-200 divide-y divide-slate-200 text-sm text-left">
+            <table id="events-table" class="min-w-full table-auto border border-slate-200 divide-y divide-slate-200 text-sm text-left">
                 <thead class="bg-gray-100 text-slate-600">
                 <tr>
                     <th class="px-4 py-2 font-bold uppercase">#</th>
-                    <th class="px-4 py-2 font-bold uppercase">Nama</th>
-                    <th class="px-4 py-2 font-bold uppercase">Email</th>
-                    <th class="px-4 py-2 font-bold uppercase">Role</th>
-                    <th class="px-4 py-2 font-bold uppercase">Jenis Kelamin</th>
+                    <th class="px-4 py-2 font-bold uppercase">Judul</th>
+                    <th class="px-4 py-2 font-bold uppercase">Mulai</th>
+                    <th class="px-4 py-2 font-bold uppercase">Berakhir</th>
+                    <th class="px-4 py-2 font-bold uppercase">Status</th>
                     <th class="px-4 py-2 font-bold uppercase text-center">Aksi</th>
                 </tr>
                 </thead>
@@ -59,17 +58,16 @@
 
     <script>
         $(function () {
-            // 1. Inisialisasi DataTable ke dalam variabel agar bisa direfresh
-            const table = $('#users-table').DataTable({
+            const table = $('#events-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route("backoffice.users.data") }}',
+                ajax: '{{ route("backoffice.events.data") }}',
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                    { data: 'name', name: 'name' },
-                    { data: 'email', name: 'email' },
-                    { data: 'role', name: 'role', orderable: false, searchable: false },
-                    { data: 'gender', name: 'gender' },
+                    { data: 'title', name: 'title' },
+                    { data: 'datetime_start', name: 'datetime_start' },
+                    { data: 'datetime_end', name: 'datetime_end' },
+                    { data: 'status', name: 'status', orderable: false, searchable: false },
                     {
                         data: 'action',
                         name: 'action',
@@ -78,11 +76,12 @@
                         className: "text-center"
                     }
                 ]
+
+
             });
 
-            // 2. Handle Hapus
             $(document).on('click', '.btn-delete', function (e) {
-                e.preventDefault(); // Cegah buka link
+                e.preventDefault(); 
 
                 const url = $(this).data('url');
 
@@ -119,4 +118,5 @@
         });
     </script>
 @endpush
+
 

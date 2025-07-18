@@ -1,6 +1,5 @@
 @extends('backoffice.layouts.app')
-@section('breadcrumb', 'Manajemen Pengguna')
-@section('title', 'Data Pengguna')
+@section('breadcrumb', 'Manajemen Jamaah')
 
 @section('content')
     @if (session('success'))
@@ -27,20 +26,19 @@
         <div class="max-w-7xl mx-auto">
         <div class="bg-white shadow-soft-xl rounded-2xl p-6">
             <div class="flex justify-between items-center mb-4">
-            <h6 class="text-lg font-semibold text-slate-700">Data Pengguna</h6>
-            <a href="{{ route('backoffice.users.create') }}" class="inline-block px-4 py-2 text-white bg-blue-500 rounded shadow hover:bg-blue-600">Tambah Pengguna</a>
-            </div>
+            <h6 class="text-lg font-semibold text-slate-700">Data Jamaah</h6>
+              </div>
     
             <div class="overflow-x-auto rounded-xl">
             <div id="alert-container"></div>
-            <table id="users-table" class="min-w-full table-auto border border-slate-200 divide-y divide-slate-200 text-sm text-left">
+            <table id="jamaah-table" class="min-w-full table-auto border border-slate-200 divide-y divide-slate-200 text-sm text-left">
                 <thead class="bg-gray-100 text-slate-600">
                 <tr>
                     <th class="px-4 py-2 font-bold uppercase">#</th>
                     <th class="px-4 py-2 font-bold uppercase">Nama</th>
                     <th class="px-4 py-2 font-bold uppercase">Email</th>
-                    <th class="px-4 py-2 font-bold uppercase">Role</th>
-                    <th class="px-4 py-2 font-bold uppercase">Jenis Kelamin</th>
+                    <th class="px-4 py-2 font-bold uppercase">Alamat</th>
+                    <th class="px-4 py-2 font-bold uppercase">Tanggal</th>
                     <th class="px-4 py-2 font-bold uppercase text-center">Aksi</th>
                 </tr>
                 </thead>
@@ -59,17 +57,16 @@
 
     <script>
         $(function () {
-            // 1. Inisialisasi DataTable ke dalam variabel agar bisa direfresh
-            const table = $('#users-table').DataTable({
+            const table = $('#jamaah-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route("backoffice.users.data") }}',
+                ajax: '{{ route("backoffice.jamaah.data") }}',
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
-                    { data: 'role', name: 'role', orderable: false, searchable: false },
-                    { data: 'gender', name: 'gender' },
+                    { data: 'address', name: 'address' },
+                    { data: 'created_at', name: 'created_at', orderable: false, searchable: false },
                     {
                         data: 'action',
                         name: 'action',
@@ -78,45 +75,11 @@
                         className: "text-center"
                     }
                 ]
-            });
 
-            // 2. Handle Hapus
-            $(document).on('click', '.btn-delete', function (e) {
-                e.preventDefault(); // Cegah buka link
 
-                const url = $(this).data('url');
-
-                if (confirm('Yakin ingin menghapus?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'DELETE',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function (response) {
-                            if (response.success) {
-                                const alert = `<div class="bg-white border border-green-300 rounded-md p-4 my-4 text-green-700 font-semibold">
-                                    ✅ Data berhasil dihapus.
-                                </div>`;
-                                $('#alert-container').html(alert);
-
-                                // Auto close alert
-                                setTimeout(() => {
-                                    $('#alert-container').fadeOut('slow', () => {
-                                        $('#alert-container').html('').show();
-                                    });
-                                }, 3000);
-
-                                table.ajax.reload(null, false); // Reload tanpa reset pagination
-                            }
-                        },
-                        error: function () {
-                            alert('Terjadi kesalahan saat menghapus data.');
-                        }
-                    });
-                }
             });
         });
     </script>
 @endpush
+
 

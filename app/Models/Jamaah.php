@@ -4,16 +4,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Event extends Model
+class Jamaah extends Model
 {
     use SoftDeletes;
+    protected $table = 'jamaah';
 
     public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [
-        'id', 'title', 'description', 'datetime_start', 'datetime_end',
-        'location', 'lat', 'long', 'poster_url', 'max_amount_participants',
-        'is_active_event', 'created_by', 'updated_by'
+        'id', 'name', 'dob', 'phone', 'email',
+        'address', 'gender', 'job', 'created_at', 'created_by',
+        'updated_at', 'updated_by', 'deleted_at'
     ];
 }
