@@ -5839,8 +5839,6 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
-<<<<<<< HEAD
-=======
         },
         {
             "name": "yajra/laravel-datatables-oracle",
@@ -5930,7 +5928,6 @@
                 }
             ],
             "time": "2025-06-15T02:58:07+00:00"
->>>>>>> e0e4cbf5f5f06cce6fee7d7e5c1d3240f4cbd241
         }
     ],
     "packages-dev": [
@@ -9243,20 +9240,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-<<<<<<< HEAD
-    "stability-flags": {},
-=======
     "stability-flags": [],
->>>>>>> e0e4cbf5f5f06cce6fee7d7e5c1d3240f4cbd241
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2"
     },
-<<<<<<< HEAD
-    "platform-dev": {},
-=======
     "platform-dev": [],
->>>>>>> e0e4cbf5f5f06cce6fee7d7e5c1d3240f4cbd241
     "plugin-api-version": "2.6.0"
 }
