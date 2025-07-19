@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -20,6 +21,10 @@ class User extends Authenticatable
         'email',
         'phone',
         'gender',
+<<<<<<< HEAD
+=======
+        'password',
+>>>>>>> e0e4cbf5f5f06cce6fee7d7e5c1d3240f4cbd241
         'role_id',
         'created_by',
         'updated_by',
@@ -44,8 +49,13 @@ class User extends Authenticatable
 
     public function role()
     {
+<<<<<<< HEAD
         return $this->belongsTo(Role::class);
     }
+=======
+        return $this->belongsTo(Role::class, 'role_id');
+    }    
+>>>>>>> e0e4cbf5f5f06cce6fee7d7e5c1d3240f4cbd241
 
     public function creator()
     {
