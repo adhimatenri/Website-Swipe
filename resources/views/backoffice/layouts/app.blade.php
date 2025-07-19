@@ -72,12 +72,9 @@
   <script src="{{ asset('admin/assets/js/plugins/perfect-scrollbar.min.js')}}" async></script>
   <!-- main script file  -->
   <script src="{{ asset('admin/assets/js/argon-dashboard-tailwind.js?v=1.0.1')}}" async></script>
-<<<<<<< HEAD
-=======
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet">
   <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 
   @stack('scripts')
->>>>>>> e0e4cbf5f5f06cce6fee7d7e5c1d3240f4cbd241
 </html>
