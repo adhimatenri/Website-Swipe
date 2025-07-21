@@ -9,6 +9,8 @@ before_script:
 
 .deploy_template: &deploy_template
   before_script:
+    - apt-get update -yqq
+    - apt-get install -yqq openssh-client git rsync
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
     - chmod 600 ~/.ssh/id_ed25519
