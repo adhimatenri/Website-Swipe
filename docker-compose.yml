@@ -26,10 +26,6 @@ services:
     networks:
       - shared_net
 
-  external-db:
-    external: true
-    name: shared_net
-
 networks:
   shared_net:
     external: true

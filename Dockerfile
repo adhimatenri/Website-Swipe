@@ -15,6 +15,9 @@ WORKDIR /var/www/html
 # Copy app files
 COPY . .
 
+# Install Laravel dependencies
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
 # Expose port 80
 EXPOSE 80
 
