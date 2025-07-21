@@ -16,13 +16,10 @@ services:
       - shared_net
     depends_on:
       - wait-for-db
-    command: sh -c "composer install"
 
   wait-for-db:
     image: alpine:3.18
     command: sh -c "apk add --no-cache postgresql-client && until pg_isready -h my_postgres -p 5432; do sleep 1; done"
-    depends_on:
-      - external-db
     networks:
       - shared_net
 
