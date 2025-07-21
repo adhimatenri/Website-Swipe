@@ -25,8 +25,8 @@ deploy_dev:
     - ssh $DEPLOY_USER@$DEPLOY_HOST "
         cd /home/ubuntu/swipe_event/dev &&
         git pull origin dev &&
-        docker compose down &&
-        docker compose up -d --build
+        docker-compose down &&
+        docker-compose up -d --build
       "
 
 deploy_prod:
@@ -38,6 +38,6 @@ deploy_prod:
     - ssh $DEPLOY_USER@$DEPLOY_HOST "
         cd /home/ubuntu/swipe_event/prod &&
         git pull origin main &&
-        docker compose down &&
-        docker compose up -d --build
+        docker-compose down &&
+        docker-compose up -d --build
       "
