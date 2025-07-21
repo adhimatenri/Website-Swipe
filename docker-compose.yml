@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: swipe_event_dev_app
+    ports:
+      - "8001:80"
+    volumes:
+      - .:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - shared_net
+    depends_on:
+      - wait-for-db
+
+  wait-for-db:
+    image: alpine:3.18
+    command: sh -c "apk add --no-cache postgresql-client && until pg_isready -h my_postgres -p 5432; do sleep 1; done"
+    depends_on:
+      - external-db
+    networks:
+      - shared_net
+
+  external-db:
+    external: true
+    name: shared_net
+
+networks:
+  shared_net:
+    external: true
