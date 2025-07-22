@@ -1,0 +1,156 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\Event;
+use Illuminate\Support\Str;
+
+class EventSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $events = [
+            [
+                'id' => '5822175e-fa86-4745-82f2-9f1d87f4af9b',
+                'title' => 'Hijrah Bukan Sekadar Ganti Tahun',
+                'slug' => Str::slug('Hijrah Bukan Sekadar Ganti Tahun'),
+                'description' => 'Sharing session eksklusif khusus akhwat bersama Ustadzah Syifa Nur Fadhilah (pengisi acara di Islam Itu Indah Trans TV & Cahaya Hati iNews).',
+                'datetime_start' => '2025-07-26 09:00:00',
+                'datetime_end' => '2025-07-26 12:00:00',
+                'location' => 'Halal Destination, Cileungsi',
+                'poster_url' => 'https://example.com/posters/hijrah-ganti-tahun.jpg',
+                'max_amount_participants' => 150,
+                'is_active_event' => true,
+                'created_at' => '2025-07-16 16:53:42',
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by_id' => null,
+                'updated_by_id' => null,
+                'deactivated_by_id' => null,
+                'deleted_by_id' => null,
+            ],
+            [
+                'id' => '1ea5b71c-aea2-4412-ba17-84a43192e416',
+                'title' => 'Muslim Path: Lika-Liku Mendidik Generasi Melek Digital',
+                'slug' => Str::slug('Muslim Path: Lika-Liku Mendidik Generasi Melek Digital'),
+                'description' => 'Muslim Life Fair Bogor mempersembahkan bahasan strategi mendidik anak melek digital bersama para asatidz: Ustadz Badrussalam, Ustadz Ammi Nur Baits, Ustadz Derma Permana, Ustadz Abdul Aziz Al-Owainy, dan Habib Taufiq Al-Hadad.',
+                'datetime_start' => '2025-06-27 10:00:00',
+                'datetime_end' => '2025-06-29 17:00:00',
+                'location' => 'Vivo Mall Bogor',
+                'poster_url' => 'https://example.com/posters/muslim-path-melek-digital.jpg',
+                'max_amount_participants' => 300,
+                'is_active_event' => false,
+                'created_at' => '2025-07-16 16:53:42',
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by_id' => null,
+                'updated_by_id' => null,
+                'deactivated_by_id' => null,
+                'deleted_by_id' => null,
+            ],
+            [
+                'id' => 'd1d199a5-85fb-4f00-8444-1f141312090f',
+                'title' => 'Selalu Ada di Nadimu',
+                'slug' => Str::slug('Selalu Ada di Nadimu'),
+                'description' => 'Sharing session “Selalu Ada di Nadimu” bersama Ustadz Handy Bonny di Masjid Ash-Shiddiq, Gunung Putri, Bogor. Gratis dengan doorprize.',
+                'datetime_start' => '2025-05-17 15:00:00',
+                'datetime_end' => '2025-05-17 17:00:00',
+                'location' => 'Masjid Ash-Shiddiq, Gunung Putri, Kab. Bogor',
+                'poster_url' => 'https://example.com/posters/selalu-ada-di-nadimu.jpg',
+                'max_amount_participants' => 200,
+                'is_active_event' => false,
+                'created_at' => '2025-07-16 16:53:42',
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by_id' => null,
+                'updated_by_id' => null,
+                'deactivated_by_id' => null,
+                'deleted_by_id' => null,
+            ],
+            [
+                'id' => '6bc7040e-729d-4ea7-a923-8c4c89ab6f91',
+                'title' => 'Amazing Muharram 14 – Beyond the Limit',
+                'slug' => Str::slug('Amazing Muharram 14 – Beyond the Limit'),
+                'description' => 'Event “Amazing Muharram 14” di Sentul International Convention Center (SICC) bersama Ustadz Fath Karim, Prof. Syafii Antonio, Coach Jamil Azzaini, Dr. Aisyah Dahlian, dan Ustadz Asep Supriatna.',
+                'datetime_start' => '2025-07-13 08:00:00',
+                'datetime_end' => '2025-07-13 16:00:00',
+                'location' => 'SICC – Sentul Bogor',
+                'poster_url' => 'https://example.com/posters/amazing-muharram-14.jpg',
+                'max_amount_participants' => 1000,
+                'is_active_event' => true,
+                'created_at' => '2025-07-16 16:53:42',
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by_id' => null,
+                'updated_by_id' => null,
+                'deactivated_by_id' => null,
+                'deleted_by_id' => null,
+            ],
+            [
+                'id' => '8112d085-5615-47e4-9a40-9c8c53698600',
+                'title' => 'Belajar Ngaji Mulai Dari #SatuHurufAjaDulu',
+                'slug' => Str::slug('Belajar Ngaji Mulai Dari #SatuHurufAjaDulu'),
+                'description' => 'Series Makharijul Huruf bagian Halqy bersama Ustadz Hendra Abu Syakira – Pengajar Tahsin & Konten Kreator. Gratis & terbuka untuk umum via Zoom.',
+                'datetime_start' => '2025-05-25 09:45:00',
+                'datetime_end' => '2025-05-25 11:30:00',
+                'location' => 'Zoom (online)',
+                'poster_url' => 'https://example.com/posters/satu-huruf-aja-dulu.jpg',
+                'max_amount_participants' => 500,
+                'is_active_event' => false,
+                'created_at' => '2025-07-16 16:53:42',
+                'updated_at' => null,
+                'deleted_at' => null,
+                'created_by_id' => null,
+                'updated_by_id' => null,
+                'deactivated_by_id' => null,
+                'deleted_by_id' => null,
+            ],
+            [
+                'id' => '5e66ec4a-5af2-433f-a3d4-b21f0573aee7',
+                'title' => 'hhi',
+                'slug' => Str::slug('hhi'),
+                'description' => 'ghsgi',
+                'datetime_start' => '2025-07-18 23:03:00',
+                'datetime_end' => '2025-07-19 23:03:00',
+                'location' => 'depok',
+                'poster_url' => 'posters/sJsVBJXsyX2VXbdj9k2Hp32LHZaXV5VHItl8Jd6m.png',
+                'max_amount_participants' => 1000,
+                'is_active_event' => true,
+                'created_at' => '2025-07-18 16:03:26',
+                'updated_at' => '2025-07-18 16:14:01',
+                'deleted_at' => null,
+                'created_by_id' => 'cbb27837-c0d4-4f1d-b760-419811f9e31a',
+                'updated_by_id' => 'cbb27837-c0d4-4f1d-b760-419811f9e31a',
+                'deactivated_by_id' => null,
+                'deleted_by_id' => null,
+            ],
+            [
+                'id' => '3b4ba4a5-dff1-4873-89e9-0c948a8285e6',
+                'title' => 'Malam Nuzulul Quran – Tabligh Akbar',
+                'slug' => Str::slug('Malam Nuzulul Quran – Tabligh Akbar'),
+                'description' => 'Tabligh Akbar memperingati Malam Nuzulul Qur’an dengan Ustadz Prof. Abdul Somad Batubara, Lc., D.E.S.A., Ph.D. di Masjid Islamic Center Ar-Rahmah, Raffles Hills Cibubur.',
+                'datetime_start' => '2025-03-15 20:30:00',
+                'datetime_end' => '2025-03-15 22:00:00',
+                'location' => 'Masjid Islamic Center Ar-Rahmah, Raffles Hills Cibubur',
+                'poster_url' => 'https://example.com/posters/nuzulul-quran-tabligh-akbar.jpg',
+                'max_amount_participants' => 800,
+                'is_active_event' => false,
+                'created_at' => '2025-07-16 16:53:42',
+                'updated_at' => '2025-07-18 16:30:39',
+                'deleted_at' => '2025-07-18 16:30:39',
+                'created_by_id' => null,
+                'updated_by_id' => null,
+                'deactivated_by_id' => null,
+                'deleted_by_id' => null,
+            ],
+        ];
+
+        foreach ($events as $data) {
+            Event::updateOrCreate(['id' => $data['id']], $data);
+        }
+    }
+}
