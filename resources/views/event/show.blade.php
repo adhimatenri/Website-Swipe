@@ -9,9 +9,9 @@
             <div class="bg-black bg-opacity-20 p-8 rounded-lg">
                 <h1 class="text-4xl font-bold text-white mb-2">{{ $event->title }}</h1>
                 <p class="text-2xl text-white">{{ $event->subtitle }}</p>
-                <div class="mt-8">
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                     <a href="#" class="bg-yellow-400 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500">Daftar Sekarang</a>
-                    <a href="#jadwal" class="bg-white text-gray-900 font-bold py-3 px-6 rounded-lg ml-4 hover:bg-gray-200">Lihat Jadwal</a>
+                    <a href="#jadwal" class="bg-white text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-gray-200">Lihat Jadwal</a>
                 </div>
             </div>
         </div>
