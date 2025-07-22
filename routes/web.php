@@ -8,6 +8,7 @@ use App\Http\Controllers\Backoffice\JamaahController;
 use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
+Route::get('/event/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('events.show');
 
 Route::get('/', function () {
     return redirect('/login');
