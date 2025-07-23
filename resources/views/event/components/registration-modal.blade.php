@@ -1,5 +1,5 @@
-<div id="registration-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 sm:p-0 z-50" x-data="{ open: false }" x-show="open" @open-modal.window="open = true" @close-modal.window="open = false" style="display: none;">
-    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto my-8 p-6 sm:p-8 max-h-[90vh] overflow-y-auto" @click.away="open = false">
+<div id="registration-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50 py-16 px-4 overflow-y-auto" x-data="{ open: false }" x-show="open" @open-modal.window="open = true" @close-modal.window="open = false" style="display: none;">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto my-8 p-6 sm:p-8 max-h-[80vh] overflow-y-auto" @click.away="open = false">
         <div class="flex justify-between items-center mb-6">
             <h3 class="text-2xl font-bold text-gray-800">Daftar Event</h3>
             <button type="button" class="text-gray-400 hover:text-gray-500" @click="open = false">
