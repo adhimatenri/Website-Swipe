@@ -15,5 +15,7 @@
     </main>
 
     @include('event.partials.footer')
+    <script src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js" defer></script>
+    @stack('scripts')
 </body>
 </html>
