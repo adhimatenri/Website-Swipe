@@ -82,4 +82,5 @@
 </div>
 
 @include('event.components.registration-modal')
+@include('event.components.successful-registration-modal')
 @endsection
