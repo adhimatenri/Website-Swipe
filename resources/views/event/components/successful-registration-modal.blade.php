@@ -62,8 +62,8 @@
         </div>
 
         <div class="space-y-4">
-            @include('event.components.form.primary-button', ['label' => 'Unduh Tiket', 'href' => '#'])
-            @include('event.components.form.secondary-button', ['label' => 'Kembali ke Beranda', 'href' => route('events.index')])
+            @include('event.components.form.button', ['label' => 'Unduh Tiket', 'href' => '#', 'variant' => 'primary'])
+            @include('event.components.form.button', ['label' => 'Kembali ke Beranda', 'href' => route('events.index'), 'variant' => 'secondary'])
         </div>
         <p class="text-xs text-gray-500 mt-6">Email berisi tiket dan detail acara juga sudah dikirim. Periksa kotak masuk atau spam.</p>
     </div>
