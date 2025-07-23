@@ -8,7 +8,7 @@
                 </svg>
             </button>
         </div>
-        <form action="#" method="POST">
+        <form action="#" method="POST" @submit.prevent="$dispatch('close-modal'); $dispatch('successful-registration')">
             @csrf
             @include('event.components.form.input', ['label' => 'Nama Lengkap', 'name' => 'name', 'placeholder' => 'John Doe'])
             @include('event.components.form.datepicker', ['label' => 'Tanggal Lahir', 'name' => 'dob'])
@@ -17,7 +17,7 @@
             @include('event.components.form.input', ['label' => 'Email', 'name' => 'email', 'type' => 'email', 'placeholder' => 'john@doe.com'])
             @include('event.components.form.textarea', ['label' => 'Alamat Lengkap', 'name' => 'address'])
             @include('event.components.form.checkbox', ['label' => 'Saya setuju untuk mematuhi aturan acara', 'name' => 'terms'])
-            @include('event.components.form.button', ['label' => 'Kirim Pendaftaran'])
+            @include('event.components.form.button', ['label' => 'Kirim Pendaftaran', 'variant' => 'submit'])
         </form>
     </div>
 </div>
