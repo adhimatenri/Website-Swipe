@@ -2,15 +2,22 @@
 
 @section('title', $event->title)
 
+
+
 @section('content')
-<div class="bg-white shadow-lg rounded-lg overflow-hidden max-w-4xl mx-auto">
+<div class="bg-white shadow-lg rounded-lg overflow-hidden max-w-4xl mx-auto" x-data>
     <div class="p-8">
         <div class="bg-purple-200 rounded-lg p-8 mb-8 text-center" style="background-image: url('{{ $event->poster_url }}'); background-size: cover; background-position: center;">
             <div class="bg-black bg-opacity-20 p-8 rounded-lg">
                 <h1 class="text-4xl font-bold text-white mb-2">{{ $event->title }}</h1>
                 <p class="text-2xl text-white">{{ $event->subtitle }}</p>
                 <div class="mt-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                    <a href="#" class="bg-yellow-400 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500">Daftar Sekarang</a>
+                    <button type="button" 
+                            class="bg-yellow-400 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-500"
+                            x-data
+                            @click="$dispatch('open-modal')">
+                        Daftar Sekarang
+                    </button>
                     <a href="#jadwal" class="bg-white text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-gray-200">Lihat Jadwal</a>
                 </div>
             </div>
@@ -73,4 +80,6 @@
         </div>
     </div>
 </div>
+
+@include('event.components.registration-modal')
 @endsection
