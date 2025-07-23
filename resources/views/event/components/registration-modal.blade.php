@@ -8,7 +8,7 @@
                 </svg>
             </button>
         </div>
-        <form action="#" method="POST">
+        <form action="#" method="POST" @submit.prevent="$dispatch('close-modal'); $dispatch('successful-registration')">
             @csrf
             @include('event.components.form.input', ['label' => 'Nama Lengkap', 'name' => 'name', 'placeholder' => 'John Doe'])
             @include('event.components.form.datepicker', ['label' => 'Tanggal Lahir', 'name' => 'dob'])
