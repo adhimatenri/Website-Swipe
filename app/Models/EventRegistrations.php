@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class EventRegistration extends Model
+class EventRegistrations extends Model
 {
     /**
      * The table associated with the model.
@@ -52,6 +52,15 @@ class EventRegistration extends Model
         'event_id',
         'jamaah_id',
         'created_by',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'createdAt' => 'datetime',
     ];
 
     /**

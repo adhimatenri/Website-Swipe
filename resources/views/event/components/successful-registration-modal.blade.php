@@ -1,4 +1,4 @@
-<div id="successful-registration-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50 py-16 px-4 overflow-y-auto" x-data="{ open: false }" x-show="open" @successful-registration.window="open = true" style="display: none;">
+<div id="successful-registration-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50 py-16 px-4 overflow-y-auto" x-data="{ open: false, registrationId: null }" x-show="open" @successful-registration.window="open = true; registrationId = $event.detail.registrationId" style="display: none;">
     <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto my-8 p-6 sm:p-8 text-center" @click.away="open = false">
         <div class="mb-6">
             <div class="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-green-100">

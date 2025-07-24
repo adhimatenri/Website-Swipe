@@ -12,6 +12,8 @@ Auth::routes();
 
 Route::get('/event/list', [FrontEventController::class, 'index'])->name('events.index');
 Route::get('/event/{slug}', [FrontEventController::class, 'show'])->name('events.show');
+Route::post('/event/{slug}/register', [FrontEventController::class, 'register'])->name('events.register');
+
 Route::get('/event', function () {
     return redirect('/event/list');
 });

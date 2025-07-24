@@ -8,11 +8,11 @@
                 </svg>
             </button>
         </div>
-        <form action="#" method="POST" @submit.prevent="$dispatch('close-modal'); $dispatch('successful-registration')">
+        <form id="registration-form" action="{{ route('events.register', $event->slug) }}" method="POST">
             @csrf
             @include('event.components.form.input', ['label' => 'Nama Lengkap', 'name' => 'name', 'placeholder' => 'John Doe'])
             @include('event.components.form.datepicker', ['label' => 'Tanggal Lahir', 'name' => 'dob'])
-            @include('event.components.form.select', ['label' => 'Jenis Kelamin', 'name' => 'gender', 'options' => ['female' => 'Akhwat (Perempuan)', 'male' => 'Ikhwan (Laki-laki)']])
+            @include('event.components.form.select', ['label' => 'Jenis Kelamin', 'name' => 'gender', 'options' => ['Akhwat' => 'Akhwat (Perempuan)', 'Ikhwan' => 'Ikhwan (Laki-laki)']])
             @include('event.components.form.phone', ['label' => 'No. Whatsapp / Handphone', 'name' => 'phone'])
             @include('event.components.form.input', ['label' => 'Email', 'name' => 'email', 'type' => 'email', 'placeholder' => 'john@doe.com'])
             @include('event.components.form.textarea', ['label' => 'Alamat Lengkap', 'name' => 'address'])
@@ -26,13 +26,47 @@
     document.addEventListener('DOMContentLoaded', function () {
         const termsCheckbox = document.getElementById('terms');
         const submitButton = document.getElementById('submit-button');
+        const form = document.getElementById('registration-form');
 
         function toggleSubmitButton() {
-            submitButton.disabled = !termsCheckbox.checked;
+            const fieldIds = ['name','dob','gender','phone','email','address'];
+            const allFilled = fieldIds.every(id => {
+                const el = document.getElementById(id);
+                return el && el.value.trim() !== '';
+            });
+            const isChecked = termsCheckbox.checked;
+            const isFormValid = allFilled && isChecked;
+            submitButton.disabled = !isFormValid;
+            if (isFormValid) {
+                submitButton.classList.remove('bg-gray-400','cursor-not-allowed');
+                submitButton.classList.add('bg-yellow-400','hover:bg-yellow-500','text-gray-900');
+            } else {
+                submitButton.classList.remove('bg-yellow-400','hover:bg-yellow-500','text-gray-900');
+                submitButton.classList.add('bg-gray-400','cursor-not-allowed');
+            }
         }
-
         toggleSubmitButton();
-
         termsCheckbox.addEventListener('change', toggleSubmitButton);
+        ['input','change'].forEach(evt => {
+            ['name','dob','gender','phone','email','address'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener(evt, toggleSubmitButton);
+            });
+        });
+        
+        // Handle AJAX submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: { 'Accept': 'application/json' },
+                body: new FormData(form),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                window.dispatchEvent(new Event('close-modal'));
+                window.dispatchEvent(new CustomEvent('successful-registration', { detail: data }));
+            }
+        });
     });
 </script>
