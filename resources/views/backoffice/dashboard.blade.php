@@ -10,7 +10,7 @@
             <div class="flex flex-row -mx-3">
                 <div class="flex-none w-2/3 max-w-full px-3">
                 <div>
-                    <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Today's Money</p>
+                    <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Event Berlangsung</p>
                     <h5 class="mb-2 font-bold dark:text-white">$53,000</h5>
                     <p class="mb-0 dark:text-white dark:opacity-60">
                     <span class="text-sm font-bold leading-normal text-emerald-500">+55%</span>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="px-3 text-right basis-1/3">
                 <div class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-blue-500 to-violet-500">
-                    <i class="ni leading-none ni-money-coins text-lg relative top-3.5 text-white"></i>
+                    <i class="ni leading-none ni-send text-lg relative top-3.5 text-white"></i>
                 </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
             <div class="flex flex-row -mx-3">
                 <div class="flex-none w-2/3 max-w-full px-3">
                 <div>
-                    <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Today's Users</p>
+                    <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Event Selesai</p>
                     <h5 class="mb-2 font-bold dark:text-white">2,300</h5>
                     <p class="mb-0 dark:text-white dark:opacity-60">
                     <span class="text-sm font-bold leading-normal text-emerald-500">+3%</span>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="px-3 text-right basis-1/3">
                 <div class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-red-600 to-orange-600">
-                    <i class="ni leading-none ni-world text-lg relative top-3.5 text-white"></i>
+                    <i class="ni leading-none ni-tag text-lg relative top-3.5 text-white"></i>
                 </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
             <div class="flex flex-row -mx-3">
                 <div class="flex-none w-2/3 max-w-full px-3">
                 <div>
-                    <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">New Clients</p>
+                    <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Jumlah Event</p>
                     <h5 class="mb-2 font-bold dark:text-white">+3,462</h5>
                     <p class="mb-0 dark:text-white dark:opacity-60">
                     <span class="text-sm font-bold leading-normal text-red-600">-2%</span>
@@ -85,7 +85,7 @@
             <div class="flex flex-row -mx-3">
                 <div class="flex-none w-2/3 max-w-full px-3">
                 <div>
-                    <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Sales</p>
+                    <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Jumlah Jamaah</p>
                     <h5 class="mb-2 font-bold dark:text-white">$103,430</h5>
                     <p class="mb-0 dark:text-white dark:opacity-60">
                     <span class="text-sm font-bold leading-normal text-emerald-500">+5%</span>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="px-3 text-right basis-1/3">
                 <div class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-orange-500 to-yellow-500">
-                    <i class="ni leading-none ni-cart text-lg relative top-3.5 text-white"></i>
+                    <i class="ni leading-none ni-istanbul text-lg relative top-3.5 text-white"></i>
                 </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
         <div class="w-full max-w-full px-3 mt-0 lg:w-7/12 lg:flex-none">
         <div class="border-black/12.5 dark:bg-slate-850 dark:shadow-dark-xl shadow-xl relative z-20 flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
             <div class="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid p-6 pt-4 pb-0">
-            <h6 class="capitalize dark:text-white">Sales overview</h6>
+            <h6 class="capitalize dark:text-white">Jumlah Yang Sudah Selesai</h6>
             <p class="mb-0 text-sm leading-normal dark:text-white dark:opacity-60">
                 <i class="fa fa-arrow-up text-emerald-500"></i>
                 <span class="font-semibold">4% more</span> in 2021
@@ -175,7 +175,7 @@
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl dark:bg-gray-950 border-black-125 rounded-2xl bg-clip-border">
             <div class="p-4 pb-0 mb-0 rounded-t-4">
             <div class="flex justify-between">
-                <h6 class="mb-2 dark:text-white">Sales by Country</h6>
+                <h6 class="mb-2 dark:text-white">Event</h6>
             </div>
             </div>
             <div class="overflow-x-auto">
@@ -313,7 +313,7 @@
         <div class="w-full max-w-full px-3 mt-0 lg:w-5/12 lg:flex-none">
         <div class="border-black/12.5 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
             <div class="p-4 pb-0 rounded-t-4">
-            <h6 class="mb-0 dark:text-white">Categories</h6>
+            <h6 class="mb-0 dark:text-white">Struktur Organisasi</h6>
             </div>
             <div class="flex-auto p-4">
             <ul class="flex flex-col pl-0 mb-0 rounded-lg">
