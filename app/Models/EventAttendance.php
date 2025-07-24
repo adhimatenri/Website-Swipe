@@ -87,7 +87,7 @@ class EventAttendance extends Model
      */
     public function registration()
     {
-        return $this->belongsTo(EventRegistration::class, 'registration_id');
+        return $this->belongsTo(EventRegistrations::class, 'registration_id');
     }
 
     /**
