@@ -85,9 +85,9 @@
             {{-- Right Image --}}
             <div class="absolute top-0 right-0 hidden w-6/12 h-full max-w-full px-3 pr-0 my-auto text-center lg:flex flex-col justify-center">
               <div class="relative flex flex-col justify-center h-full bg-no-repeat bg-center px-24 m-4 overflow-hidden rounded-xl" 
-                   style="background-image: url('{{ asset('admin/assets/img/login.png') }}'); 
+                   style="background-image: url('{{ asset('admin/assets/img/logo_swipe.png') }}'); 
                           background-color: #fffbea;
-                          background-size: contain;
+                          background-size: cover;
                           background-repeat: no-repeat;
                           background-position: center;">
               </div>
