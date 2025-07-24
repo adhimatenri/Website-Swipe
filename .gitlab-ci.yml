@@ -1,0 +1,43 @@
+image: php:8.2
+
+stages:
+  - deploy
+
+before_script:
+  - apt-get update -yqq
+  - apt-get install -yqq git openssh-client rsync
+
+.deploy_template: &deploy_template
+  before_script:
+    - apt-get update -yqq
+    - apt-get install -yqq openssh-client git rsync
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+
+deploy_dev:
+  <<: *deploy_template
+  stage: deploy
+  only:
+    - dev
+  script:
+    - ssh $DEPLOY_USER@$DEPLOY_HOST "
+        cd /home/ubuntu/swipe_event/dev &&
+        git pull origin dev &&
+        docker-compose down &&
+        docker-compose up -d --build
+      "
+
+deploy_prod:
+  <<: *deploy_template
+  stage: deploy
+  only:
+    - main
+  script:
+    - ssh $DEPLOY_USER@$DEPLOY_HOST "
+        cd /home/ubuntu/swipe_event/prod &&
+        git pull origin main &&
+        docker-compose down &&
+        docker-compose up -d --build
+      "
