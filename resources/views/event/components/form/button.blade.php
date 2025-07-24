@@ -12,7 +12,7 @@
 @if($href)
     <a href="{{ $href }}" class="{{ $classes }}">{{ $label }}</a>
 @else
-    <button type="submit" id="submit-button" class="{{ $classes }}" {{ $attributes->merge(['disabled' => $variant === 'submit' ? true : null]) }}>
+    <button type="submit" id="submit-button" class="{{ $classes }}" {{ $attributes }}>
         {{ $label }}
     </button>
 @endif
