@@ -28,11 +28,29 @@
         const submitButton = document.getElementById('submit-button');
 
         function toggleSubmitButton() {
-            submitButton.disabled = !termsCheckbox.checked;
+            const fieldIds = ['name','dob','gender','phone','email','address'];
+            const allFilled = fieldIds.every(id => {
+                const el = document.getElementById(id);
+                return el && el.value.trim() !== '';
+            });
+            const isChecked = termsCheckbox.checked;
+            const isFormValid = allFilled && isChecked;
+            submitButton.disabled = !isFormValid;
+            if (isFormValid) {
+                submitButton.classList.remove('bg-gray-400','cursor-not-allowed');
+                submitButton.classList.add('bg-yellow-400','hover:bg-yellow-500','text-gray-900');
+            } else {
+                submitButton.classList.remove('bg-yellow-400','hover:bg-yellow-500','text-gray-900');
+                submitButton.classList.add('bg-gray-400','cursor-not-allowed');
+            }
         }
-
         toggleSubmitButton();
-
         termsCheckbox.addEventListener('change', toggleSubmitButton);
+        ['input','change'].forEach(evt => {
+            ['name','dob','gender','phone','email','address'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener(evt, toggleSubmitButton);
+            });
+        });
     });
 </script>
