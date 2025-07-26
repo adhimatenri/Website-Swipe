@@ -60,8 +60,16 @@ class EventController extends Controller
             $posterUrl = $request->file('poster')->store('posters', 'public');
         }
 
+        $slug = Str::slug($request->title);
+        $base = $slug;
+
+        while (Event::where('slug', $slug)->exists()) {
+            $slug = $base.'-'.Str::random(4);
+        }
+
         Event::create([
             'id' => Str::uuid(),
+            'slug' => $slug,
             'title' => $request->title,
             'description' => $request->description,
             'datetime_start' => $request->datetime_start,
@@ -73,7 +81,8 @@ class EventController extends Controller
             'created_by' => auth()->id(),
         ]);
 
-        return redirect()->route('backoffice.events.index')->with('success', 'Data Event Berhasil Ditambahkan');
+        return redirect()->route('backoffice.events.index')
+                         ->with('success','Data Event Berhasil Ditambahkan');
     }
 
     public function edit(Event $event)
@@ -99,7 +108,22 @@ class EventController extends Controller
             $event->poster_url = $posterUrl;
         }
 
+        // Only regenerate slug if title changed
+        if ($request->title !== $event->title) {
+            $slug = Str::slug($request->title);
+            $base = $slug;
+
+            while (Event::where('slug', $slug)
+                        ->where('id','!=',$event->id)
+                        ->exists()) {
+                $slug = $base.'-'.Str::random(4);
+            }
+        } else {
+            $slug = $event->slug;
+        }
+
         $event->update([
+            'slug' => $slug,
             'title' => $request->title,
             'description' => $request->description,
             'datetime_start' => $request->datetime_start,
@@ -110,7 +134,8 @@ class EventController extends Controller
             'updated_by' => auth()->id(),
         ]);
 
-        return redirect()->route('backoffice.events.index')->with('success', 'Data Event Berhasil Diperbaharui');
+        return redirect()->route('backoffice.events.index')
+                         ->with('success','Data Event Berhasil Diperbaharui');
     }
     public function show(Event $event)
     {
