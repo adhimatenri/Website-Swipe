@@ -10,13 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-Route::get('/event/list', [FrontEventController::class, 'index'])->name('events.index');
-Route::get('/event/{slug}', [FrontEventController::class, 'show'])->name('events.show');
-Route::post('/event/{slug}/register', [FrontEventController::class, 'register'])->name('events.register');
-
 Route::get('/event', function () {
     return redirect('/event/list');
 });
+Route::get('/event/list', [FrontEventController::class, 'index'])->name('events.index');
+Route::get('/event/{slug}', [FrontEventController::class, 'show'])->name('events.show');
+Route::post('/event/{slug}/register', [FrontEventController::class, 'register'])->name('events.register');
+Route::post('/event/registration/qrcode', [FrontEventController::class, 'generateQrCode'])
+    ->name('registration.qrcode');
 
 Route::get('/', function () {
     return redirect('/login');
@@ -34,4 +35,3 @@ Route::prefix('backoffice')->name('backoffice.')->middleware('auth')->group(func
     Route::get('jamaah/data', [JamaahController::class, 'data'])->name('jamaah.data');
     Route::resource('jamaah', JamaahController::class)->names('jamaah');
 });
-
