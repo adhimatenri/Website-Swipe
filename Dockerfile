@@ -18,7 +18,9 @@ COPY . .
 # Install Laravel dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-RUN php artisan optimize:clear \
+RUN php artisan config:clear \
+ && php artisan route:clear \
+ && php artisan view:clear \
  && php artisan config:cache \
  && php artisan route:cache \
  && php artisan view:cache
