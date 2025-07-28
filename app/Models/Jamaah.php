@@ -32,4 +32,12 @@ class Jamaah extends Model
             }
         });
     }
+
+    /**
+     * Find the Jamaah associated with a registration ID.
+     */
+    public static function findByJamaahId(string $jamaahId): ?self
+    {
+        return static::find($jamaahId);
+    }
 }

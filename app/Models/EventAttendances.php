@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use App\Models\EventRegistrations;  // <— import
 
-class EventAttendance extends Model
+class EventAttendances extends Model
 {
     use SoftDeletes;
 
@@ -112,5 +113,34 @@ class EventAttendance extends Model
     public function scanner()
     {
         return $this->belongsTo(User::class, 'scanned_by_id');
+    }
+
+    /**
+     * Record an attendance based on a registration.
+     */
+    public static function markJamaahAttendance(EventRegistrations $registration): self
+    {
+        return static::create([
+            'registration_id' => $registration->id,
+            'event_id'        => $registration->event_id,
+            'jamaah_id'       => $registration->jamaah_id,
+            'check_in_at'     => now(),
+        ]);
+    }
+
+    /**
+     * Find an attendance record by registration ID.
+     */
+    public static function findByRegistrationId(string $registrationId): ?self
+    {
+        $registrationId = trim($registrationId);
+        if (! Str::isUuid($registrationId)) {
+            try {
+                $registrationId = (string) Str::uuid($registrationId);
+            } catch (\Exception $e) {
+                return null;
+            }
+        }
+        return static::where('registration_id', $registrationId)->first();
     }
 }

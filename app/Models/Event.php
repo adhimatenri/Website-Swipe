@@ -14,6 +14,7 @@ class Event extends Model
 
     protected $fillable = [
         'id',
+        'slug',
         'title',
         'description',
         'datetime_start',
@@ -38,4 +39,12 @@ class Event extends Model
         'datetime_end'       => 'datetime',
         'is_active_event'    => 'boolean',
     ];
+
+    /**
+     * Find the event associated with a eventID
+     */
+    public static function findByEventId(string $eventId): ?self
+    {
+        return static::find($eventId);
+    }
 }
