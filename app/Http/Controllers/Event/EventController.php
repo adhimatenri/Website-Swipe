@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Jamaah;
 use App\Models\EventRegistrations;
+use App\Models\EventAttendances;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use chillerlan\QRCode\Output\QRMarkupSVG;
@@ -121,5 +122,109 @@ class EventController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to generate QR code'], 500);
         }
+    }
+    /**
+     * Get attendance information based on registration ID.
+     * 
+     */
+    public function getAttendanceInfo(string $registrationId)
+    {
+        $existingAttendance = EventAttendances::findByRegistrationId($registrationId);
+        if ($existingAttendance) {
+            return response()->json([
+                'status'     => 'error',
+                'message'    => 'Attendance already marked for this registration',
+                'providedId' => $registrationId
+            ], 400);
+        }
+
+        $registration = EventRegistrations::findByRegistrationId($registrationId);
+        
+        if (!$registration) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Registration not found',
+                'providedId' => $registrationId
+            ], 404);
+        }
+        
+        $event = Event::findByEventId($registration->event_id);
+        $jamaah = Jamaah::findByJamaahId($registration->jamaah_id);
+        
+        if (!$event || !$jamaah) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Event or jamaah information not found',
+                'providedId' => $registrationId
+            ], 404);
+        }
+        
+        if (now() >= $event->datetime_end) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Event has ended. Attendance registration is no longer available',
+                'providedId' => $registrationId
+            ], 400);
+        }
+        
+        $eventDateStart = date('Y-m-d', strtotime($event->datetime_start));
+        $eventDateEnd = date('Y-m-d', strtotime($event->datetime_end));
+        $startTime = date('H:i', strtotime($event->datetime_start));
+        $endTime = date('H:i', strtotime($event->datetime_end));
+        
+        $response = [
+            'status' => 'success',
+            'eventDetails' => [
+                'eventTitle' => $event->title,
+                'eventStart' => [
+                    'date' => $eventDateStart,
+                    'time' => $startTime
+                ],
+                'eventEnd' => [
+                    'date' => $eventDateEnd,
+                    'time' => $endTime
+                ]
+            ],
+            'jamaahDetails' => [
+                'jamaahName' => $jamaah->name,
+                'jamaahDob' => $jamaah->dob,
+                'jamaahPhone' => $jamaah->phone,
+                'jamaahAddress' => $jamaah->address
+            ]
+        ];
+        
+        return response()->json($response);
+    }
+
+    /**
+     * Mark attendance for a registration.
+     */
+    public function markAttendance(string $registrationId)
+    {
+        $registration = EventRegistrations::findByRegistrationId($registrationId);
+        if (! $registration) {
+            return response()->json([
+                'status'     => 'error',
+                'message'    => 'Registration not found',
+                'providedId' => $registrationId
+            ], 404);
+        }
+
+        $existingAttendance = EventAttendances::findByRegistrationId($registrationId);
+        if ($existingAttendance) {
+            return response()->json([
+                'status'     => 'error',
+                'message'    => 'Attendance already marked for this registration',
+                'providedId' => $registrationId
+            ], 400);
+        }
+
+        $attendance = EventAttendances::markJamaahAttendance($registration);
+        return response()->json([
+            'status'       => 'success',
+            'message'      => 'Attendance marked successfully',
+            'attendanceId' => $attendance->id,
+            'providedId'   => $registrationId
+        ], 200);
     }
 }

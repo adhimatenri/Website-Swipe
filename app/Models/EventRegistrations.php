@@ -92,4 +92,21 @@ class EventRegistrations extends Model
     {
         return $this->belongsTo(Jamaah::class, 'jamaah_id');
     }
+
+    /**
+     * Find a registration record by registration ID, handling trim and UUID conversion.
+     */
+    public static function findByRegistrationId(string $registrationId): ?self
+    {
+        $registrationId = trim($registrationId);
+        if (! Str::isUuid($registrationId)) {
+            try {
+                $registrationId = (string) Str::uuid($registrationId);
+            } catch (\Exception $e) {
+                return null;
+            }
+        }
+
+        return static::find($registrationId);
+    }
 }
