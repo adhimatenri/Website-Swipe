@@ -34,17 +34,18 @@
             <div id="alert-container"></div>
             <table id="events-table" class="min-w-full table-auto border border-slate-200 divide-y divide-slate-200 text-sm text-left">
                 <thead class="bg-gray-100 text-slate-600">
-                <tr>
-                    <th class="px-4 py-2 font-bold uppercase">#</th>
-                    <th class="px-4 py-2 font-bold uppercase">Judul</th>
-                    <th class="px-4 py-2 font-bold uppercase">Mulai</th>
-                    <th class="px-4 py-2 font-bold uppercase">Berakhir</th>
-                    <th class="px-4 py-2 font-bold uppercase">Status</th>
-                    <th class="px-4 py-2 font-bold uppercase text-center">Aksi</th>
-                </tr>
+                    <tr>
+                        <th class="px-4 py-2 font-bold uppercase">#</th>
+                        <th class="px-4 py-2 font-bold uppercase">Judul</th>
+                        <th class="px-4 py-2 font-bold uppercase">Mulai</th>
+                        <th class="px-4 py-2 font-bold uppercase">Berakhir</th>
+                        <th class="px-4 py-2 font-bold uppercase">Status</th>
+                        <th class="px-4 py-2 font-bold uppercase text-center">Aksi</th>
+                    </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-200 text-slate-700"></tbody>
+                <tbody></tbody>
             </table>
+            
             </div>
         </div>
         </div>
@@ -57,10 +58,16 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <script>
-        $(function () {
+        $(document).ready(function () {
+  
+            if ($.fn.DataTable.isDataTable('#events-table')) {
+                $('#events-table').DataTable().destroy();
+            }
+
             const table = $('#events-table').DataTable({
                 processing: true,
                 serverSide: true,
+                destroy: true, // <-- tambahkan ini biar aman
                 ajax: '{{ route("backoffice.events.data") }}',
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
@@ -68,45 +75,25 @@
                     { data: 'datetime_start', name: 'datetime_start' },
                     { data: 'datetime_end', name: 'datetime_end' },
                     { data: 'status', name: 'status', orderable: false, searchable: false },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false,
-                        className: "text-center"
-                    }
+                    { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" }
                 ]
-
-
             });
 
             $(document).on('click', '.btn-delete', function (e) {
-                e.preventDefault(); 
-
+                e.preventDefault();
                 const url = $(this).data('url');
-
                 if (confirm('Yakin ingin menghapus?')) {
                     $.ajax({
                         url: url,
                         type: 'DELETE',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
+                        data: { _token: '{{ csrf_token() }}' },
                         success: function (response) {
                             if (response.success) {
-                                const alert = `<div class="bg-white border border-green-300 rounded-md p-4 my-4 text-green-700 font-semibold">
+                                $('#alert-container').html(`<div class="bg-white border border-green-300 rounded-md p-4 my-4 text-green-700 font-semibold">
                                     ✅ Data berhasil dihapus.
-                                </div>`;
-                                $('#alert-container').html(alert);
-
-                                // Auto close alert
-                                setTimeout(() => {
-                                    $('#alert-container').fadeOut('slow', () => {
-                                        $('#alert-container').html('').show();
-                                    });
-                                }, 3000);
-
-                                table.ajax.reload(null, false); // Reload tanpa reset pagination
+                                </div>`);
+                                setTimeout(() => $('#alert-container').fadeOut(), 3000);
+                                table.ajax.reload(null, false);
                             }
                         },
                         error: function () {
@@ -116,6 +103,7 @@
                 }
             });
         });
+
     </script>
 @endpush
 
