@@ -13,12 +13,23 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
+# Copy composer files first
+COPY composer.json composer.lock ./
+
+# Install dependencies
+RUN composer install --no-scripts --no-autoloader --no-interaction --prefer-dist
+
 # Copy app files
 COPY . .
 
-# Install Laravel dependencies
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+# Finish composer setup
+RUN composer dump-autoload --optimize \
+    && composer run-scripts post-install-cmd
 
+# Make sure QR code package is installed
+RUN composer require chillerlan/php-qrcode
+
+# Clear and cache Laravel configs
 RUN php artisan config:clear \
  && php artisan route:clear \
  && php artisan view:clear \
