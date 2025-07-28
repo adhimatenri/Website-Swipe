@@ -19,6 +19,18 @@ Route::post('/event/{slug}/register', [FrontEventController::class, 'register'])
 Route::post('/event/registration/qrcode', [FrontEventController::class, 'generateQrCode'])
     ->name('registration.qrcode');
 
+Route::get('/debug-routes', function() {
+    $routes = collect(Route::getRoutes())->map(function($route) {
+        return [
+            'uri' => $route->uri(),
+            'methods' => $route->methods(),
+            'name' => $route->getName(),
+            'action' => $route->getActionName()
+        ];
+    });
+    return response()->json($routes);
+});
+
 Route::get('/', function () {
     return redirect('/login');
 });
