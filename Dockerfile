@@ -16,6 +16,9 @@ WORKDIR /var/www/html
 # Copy composer files first
 COPY composer.json composer.lock ./
 
+# Fix git ownership issues
+RUN git config --global --add safe.directory /var/www/html
+
 # Install dependencies
 RUN composer install --no-scripts --no-autoloader --no-interaction --prefer-dist
 
@@ -24,9 +27,6 @@ COPY . .
 
 # Finish composer setup
 RUN composer dump-autoload --optimize
-
-# Make sure QR code package is installed
-RUN composer require chillerlan/php-qrcode
 
 # Clear and cache Laravel configs
 RUN php artisan config:clear \
