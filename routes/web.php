@@ -23,14 +23,16 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::prefix('backoffice')->name('backoffice.')->middleware('auth')->group(function () {
+Route::prefix('admin/backoffice')->name('backoffice.')->middleware('auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('chart-data', [DashboardController::class, 'chartData'])->name('dashboard.chartData');
+
+    
     Route::get('users/data', [UserController::class, 'data'])->name('users.data');
     Route::resource('users', UserController::class)->names('users');
 
     Route::get('data', [BackofficeEventController::class, 'data'])->name('events.data');
     Route::resource('events', BackofficeEventController::class)->names('events');
-
 
     Route::get('jamaah/data', [JamaahController::class, 'data'])->name('jamaah.data');
     Route::resource('jamaah', JamaahController::class)->names('jamaah');

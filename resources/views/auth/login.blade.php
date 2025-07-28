@@ -1,12 +1,49 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Login Admin</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="{{ asset('admin/assets/css/argon-dashboard-tailwind.css?v=1.0.1') }}" rel="stylesheet" />
-</head>
-<body style="background-color: #faf4dc;" class="m-0 font-sans antialiased font-normal text-start text-base leading-default text-slate-500">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('admin/assets/img/logo.png')}}" />
+    <link rel="icon" type="image/png" href="{{ asset('admin/assets/img/logo.png')}}" />
+    <title>Management Event Swipe</title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- Nucleo Icons -->
+    <link href="{{ asset('admin/assets/css/nucleo-icons.css')}}" rel="stylesheet" />
+    <link href="{{ asset('admin/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
+    <!-- Popper -->
+    <script src="https://unpkg.com/@popperjs/core@2'"></script>
+    <!-- Main Styling -->
+    <link href="{{ asset('admin/assets/css/argon-dashboard-tailwind.css?v=1.0.1')}}" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        table.dataTable thead th {
+          @apply border-b bg-gray-100 text-xs font-bold uppercase text-slate-500 px-4 py-2;
+        }
+      
+        table.dataTable tbody td {
+          @apply px-4 py-2 text-slate-600;
+        }
+      
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+          @apply px-2 py-1 rounded-md border text-sm hover:bg-blue-100;
+        }
+      
+        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper .dataTables_filter input {
+          @apply border rounded px-2 py-1 text-sm;
+        }
+      
+        .dataTables_wrapper .dataTables_info {
+          @apply text-sm mt-2;
+        }
+      </style>
+      
+  </head>
+<body style="background-color: #ffffff;" class="m-0 font-sans antialiased font-normal text-start text-base leading-default text-slate-500">
 
   <main class="mt-0 transition-all duration-200 ease-in-out">
     <section>
@@ -53,27 +90,12 @@
                       @enderror
                     </div>
 
-                    {{-- Remember me --}}
-                    <div class="flex items-center pl-2 mb-2">
-                      <input id="remember_me" name="remember" type="checkbox"
-                        class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
-                      <label for="remember_me" class="ml-2 text-sm text-slate-700">Remember me</label>
-                    </div>
-
-                    {{-- Forgot password --}}
-                    <div class="flex justify-end">
-                      @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" class="text-sm text-gray-600 hover:text-gray-900">
-                          Lupa password?
-                        </a>
-                      @endif
-                    </div>
 
                     {{-- Submit --}}
                     <div class="text-center">
                       <button type="submit"
                         class="inline-block w-full px-16 py-3.5 mt-6 mb-0 font-bold text-white bg-blue-500 border-0 rounded-lg shadow-md hover:-translate-y-px hover:shadow-xs active:opacity-85 text-sm transition-all">
-                        Sign in
+                        Masuk
                       </button>
                     </div>
                   </form>
@@ -85,8 +107,8 @@
             {{-- Right Image --}}
             <div class="absolute top-0 right-0 hidden w-6/12 h-full max-w-full px-3 pr-0 my-auto text-center lg:flex flex-col justify-center">
               <div class="relative flex flex-col justify-center h-full bg-no-repeat bg-center px-24 m-4 overflow-hidden rounded-xl" 
-                   style="background-image: url('{{ asset('admin/assets/img/logo_swipe.png') }}'); 
-                          background-color: #fffbea;
+                   style="background-image: url('{{ asset('admin/assets/img/login_design.png') }}'); 
+                          background-color: #ffcd1b;
                           background-size: cover;
                           background-repeat: no-repeat;
                           background-position: center;">
