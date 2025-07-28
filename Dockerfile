@@ -26,15 +26,15 @@ RUN composer install --no-scripts --no-autoloader --no-interaction --prefer-dist
 COPY . .
 
 # Finish composer setup
-RUN composer dump-autoload --optimize
+RUN composer install
 
 # Clear and cache Laravel configs
 RUN php artisan config:clear \
  && php artisan route:clear \
  && php artisan view:clear \
- && php artisan config:cache \
- && php artisan route:cache \
- && php artisan view:cache
+ && php artisan config:cache || true \
+ && php artisan route:cache || true \
+ && php artisan view:cache || true
 
 # Expose port 80
 EXPOSE 80
