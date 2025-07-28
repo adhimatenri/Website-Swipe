@@ -23,8 +23,7 @@ RUN composer install --no-scripts --no-autoloader --no-interaction --prefer-dist
 COPY . .
 
 # Finish composer setup
-RUN composer dump-autoload --optimize \
-    && composer run-script post-install-cmd
+RUN composer dump-autoload --optimize
 
 # Make sure QR code package is installed
 RUN composer require chillerlan/php-qrcode
