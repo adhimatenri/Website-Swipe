@@ -23,7 +23,7 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::prefix('/admin/backoffice')->name('backoffice.')->middleware('auth')->group(function () {
+Route::prefix('admin/backoffice')->name('backoffice.')->middleware('auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('chart-data', [DashboardController::class, 'chartData'])->name('dashboard.chartData');
 
