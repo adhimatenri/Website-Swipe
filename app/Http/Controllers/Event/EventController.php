@@ -20,10 +20,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::where('is_active_event', true)
-            ->where('datetime_end', '>', now())
-            ->orderBy('datetime_start', 'asc')
-            ->get();
+        $events = Event::getActiveEvents();
         return view('event.index', compact('events'));
     }
 
@@ -32,7 +29,7 @@ class EventController extends Controller
      */
     public function show(string $slug)
     {
-        $event = Event::where('slug', $slug)->firstOrFail();
+        $event = Event::findBySlug($slug);
         return view('event.show', compact('event'));
     }
 
@@ -50,27 +47,21 @@ class EventController extends Controller
             'address' => 'required|string',
         ]);
 
-        $event = Event::where('slug', $slug)->firstOrFail();
+        $event = Event::findBySlug($slug);
 
-        $jamaah =             
-            Jamaah::where('email', $request->email)
-            ->orWhere('phone', $request->phone)
-            ->first();
+        $jamaah = Jamaah::findByEmailOrPhone($request->email, $request->phone);
         if (! $jamaah) {
-            $jamaah = Jamaah::create([
-                'name' => $request->name,
-                'dob' => $request->dob,
-                'gender' => $request->gender,
-                'phone' => $request->phone,
-                'email' => $request->email,
+            $jamaah = Jamaah::createNewJamaah([
+                'name'    => $request->name,
+                'dob'     => $request->dob,
+                'gender'  => $request->gender,
+                'phone'   => $request->phone,
+                'email'   => $request->email,
                 'address' => $request->address
             ]);
         }
 
-        $registration = EventRegistrations::create([
-            'event_id' => $event->id,
-            'jamaah_id' => $jamaah->id
-        ]);
+        $registration = EventRegistrations::registerJamaahToEvent($event->id, $jamaah->id);
 
         // Return JSON payload for AJAX
         return response()->json([ 'registrationId' => $registration->id ]);

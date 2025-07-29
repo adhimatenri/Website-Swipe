@@ -47,4 +47,23 @@ class Event extends Model
     {
         return static::find($eventId);
     }
+    
+    /**
+     * Get active events that haven't ended yet, ordered by start date
+     */
+    public static function getActiveEvents()
+    {
+        return static::where('is_active_event', true)
+            ->where('datetime_end', '>', now())
+            ->orderBy('datetime_start', 'asc')
+            ->get();
+    }
+
+    /**
+     * Find an event by its slug or fail.
+     */
+    public static function findBySlug(string $slug): self
+    {
+        return static::where('slug', $slug)->firstOrFail();
+    }
 }
