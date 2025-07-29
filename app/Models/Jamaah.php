@@ -40,4 +40,31 @@ class Jamaah extends Model
     {
         return static::find($jamaahId);
     }
+
+    /**
+     * Find a jamaah by email or phone.
+     */
+    public static function findByEmailOrPhone(string $email, string $phone): ?self
+    {
+        return static::where('email', $email)
+            ->orWhere('phone', $phone)
+            ->first();
+    }
+
+    /**
+     * Find a jamaah by email or phone, or create one with provided attributes.
+     */
+    public static function createNewJamaah(array $attributes): self
+    {
+        $jamaah = static::create([
+            'name'    => $attributes['name'],
+            'dob'     => $attributes['dob'],
+            'gender'  => $attributes['gender'],
+            'phone'   => $attributes['phone'],
+            'email'   => $attributes['email'],
+            'address' => $attributes['address'],
+        ]);
+
+        return $jamaah;
+    }
 }
