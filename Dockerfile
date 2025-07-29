@@ -39,4 +39,4 @@ RUN php artisan config:clear \
 # Expose port 80
 EXPOSE 80
 
-CMD ["php", "-S", "0.0.0.0:80", "-t", "server.php"]
+CMD ["php", "-S", "0.0.0.0:80", "-t", "public"]
