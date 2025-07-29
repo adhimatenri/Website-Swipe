@@ -39,5 +39,5 @@ RUN php artisan config:clear \
 # Expose port 80
 EXPOSE 80
 
-# CMD ["php", "-S", "0.0.0.0:80", "-t", "public/index.php"]
+# CMD ["php", "-S", "0.0.0.0:80", "-t", "public"]
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=80"]
