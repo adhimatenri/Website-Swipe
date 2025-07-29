@@ -211,6 +211,14 @@ class EventController extends Controller
         }
 
         $attendance = EventAttendances::markJamaahAttendance($registration);
+        if (! $attendance) {
+            return response()->json([
+                'status'       => 'error',
+                'message'      => 'Failed to mark attendance',
+                'providedId'   => $registrationId
+            ], 500);
+        }
+
         return response()->json([
             'status'       => 'success',
             'message'      => 'Attendance marked successfully',
