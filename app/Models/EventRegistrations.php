@@ -109,4 +109,15 @@ class EventRegistrations extends Model
 
         return static::find($registrationId);
     }
+
+    /**
+     * Register a jamaah for an event.
+     */
+    public static function registerJamaahToEvent(string $eventId, string $jamaahId): self
+    {
+        return static::create([
+            'event_id'  => $eventId,
+            'jamaah_id' => $jamaahId,
+        ]);
+    }
 }
