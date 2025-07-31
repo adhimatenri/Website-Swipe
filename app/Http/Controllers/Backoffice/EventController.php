@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Backoffice;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\EventRegistrations;
+use App\Models\EventAttendances;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use Yajra\DataTables\Html\Builder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class EventController extends Controller
@@ -33,7 +36,8 @@ class EventController extends Controller
 
     public function index()
     {
-        return view('backoffice.events.index');
+        $events = Event::orderBy('datetime_start', 'desc')->paginate(9);
+        return view('backoffice.events.index', compact('events'));
     }
     
 
@@ -51,7 +55,7 @@ class EventController extends Controller
             'datetime_end' => 'required|date|after:datetime_start',
             'location' => 'nullable',
             'max_amount_participants' => 'nullable|integer|min:0',
-            'poster' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // ✅ validasi file
+            'poster' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', 
         ]);
 
         $posterUrl = null;
@@ -60,16 +64,8 @@ class EventController extends Controller
             $posterUrl = $request->file('poster')->store('posters', 'public');
         }
 
-        $slug = Str::slug($request->title);
-        $base = $slug;
-
-        while (Event::where('slug', $slug)->exists()) {
-            $slug = $base.'-'.Str::random(4);
-        }
-
         Event::create([
             'id' => Str::uuid(),
-            'slug' => $slug,
             'title' => $request->title,
             'description' => $request->description,
             'datetime_start' => $request->datetime_start,
@@ -81,8 +77,7 @@ class EventController extends Controller
             'created_by' => auth()->id(),
         ]);
 
-        return redirect()->route('backoffice.events.index')
-                         ->with('success','Data Event Berhasil Ditambahkan');
+        return redirect()->route('backoffice.events.index')->with('success', 'Data Event Berhasil Ditambahkan');
     }
 
     public function edit(Event $event)
@@ -108,22 +103,7 @@ class EventController extends Controller
             $event->poster_url = $posterUrl;
         }
 
-        // Only regenerate slug if title changed
-        if ($request->title !== $event->title) {
-            $slug = Str::slug($request->title);
-            $base = $slug;
-
-            while (Event::where('slug', $slug)
-                        ->where('id','!=',$event->id)
-                        ->exists()) {
-                $slug = $base.'-'.Str::random(4);
-            }
-        } else {
-            $slug = $event->slug;
-        }
-
         $event->update([
-            'slug' => $slug,
             'title' => $request->title,
             'description' => $request->description,
             'datetime_start' => $request->datetime_start,
@@ -134,13 +114,42 @@ class EventController extends Controller
             'updated_by' => auth()->id(),
         ]);
 
-        return redirect()->route('backoffice.events.index')
-                         ->with('success','Data Event Berhasil Diperbaharui');
+        return redirect()->route('backoffice.events.index')->with('success', 'Data Event Berhasil Diperbaharui');
     }
-    public function show(Event $event)
+    public function show($id)
     {
-        return view('backoffice.events.show', compact('event'));
+        $event = Event::findOrFail($id);
+    
+        // Hitung jumlah jamaah terdaftar
+        $registered = DB::table('event_registrations')
+            ->where('event_id', $id)
+            ->count();
+    
+        // Hitung jumlah jamaah hadir (ada di attendances)
+        $attended = DB::table('event_attendances')
+            ->where('event_id', $id)
+            ->count();
+    
+        // Data detail jamaah + kehadiran
+        $registrations = DB::table('event_registrations as er')
+            ->join('jamaah as j', 'er.jamaah_id', '=', 'j.id')
+            ->leftJoin('event_attendances as ea', 'er.id', '=', 'ea.registration_id')
+            ->select(
+                'er.id as registration_id',
+                'j.name',
+                'j.email',
+                'j.phone',
+                DB::raw("CASE WHEN ea.id IS NULL THEN 'Tidak' ELSE 'Ya' END as kehadiran")
+            )
+            ->where('er.event_id', $id)
+            ->get();
+    
+        return view('backoffice.events.show', compact('event', 'registrations', 'registered', 'attended'));
     }
+    
+    
+
+
     public function destroy(Event $event)
     {
         $event->delete();
