@@ -44,6 +44,7 @@ Route::prefix('admin/backoffice')->name('backoffice.')->middleware('auth')->grou
     Route::resource('users', UserController::class)->names('users');
 
     Route::get('data', [BackofficeEventController::class, 'data'])->name('events.data');
+    Route::get('events/scan', [BackofficeEventController::class, 'scan'])->name('events.scan');
     Route::resource('events', BackofficeEventController::class)->names('events');
 
     Route::get('jamaah/data', [JamaahController::class, 'data'])->name('jamaah.data');

@@ -8,7 +8,7 @@
             <div class="flex justify-between items-center mb-4">
                 <h6 class="text-lg font-semibold text-slate-700">Data Event</h6>
                 <div class="flex gap-3">
-                    <a href="#" 
+                    <a href="{{ route('backoffice.events.scan') }}" 
                     class="px-4 py-2 bg-blue-500 text-white rounded shadow hover:bg-blue-600 gap-1 mr-4">
                         Pindai Barcode
                     </a>

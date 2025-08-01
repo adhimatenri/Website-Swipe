@@ -169,10 +169,15 @@ class EventController extends Controller
     
         return view('backoffice.events.show', compact('event', 'registrations', 'registered', 'attended'));
     }
-    
-    
 
-
+    /**
+     * Show barcode scan page.
+     */
+    public function scan()
+    {
+        return view('backoffice.events.scan');
+    }
+    
     public function destroy(Event $event)
     {
         $event->delete();
