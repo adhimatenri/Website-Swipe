@@ -180,7 +180,8 @@ class EventController extends Controller
                 'jamaahName' => $jamaah->name,
                 'jamaahDob' => $jamaah->dob,
                 'jamaahPhone' => $jamaah->phone,
-                'jamaahAddress' => $jamaah->address
+                'jamaahAddress' => $jamaah->address,
+                'jamaahEmail' => $jamaah->email
             ]
         ];
         
