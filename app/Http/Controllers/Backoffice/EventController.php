@@ -185,6 +185,9 @@ class EventController extends Controller
         return response()->json(['success' => true]);
     }
 
+    /**
+     * Decode the barcode from a base64 image.
+     */
     public function decodeBarcode(Request $request)
     {
         $request->validate(['image' => 'required']);
@@ -216,6 +219,9 @@ class EventController extends Controller
         }
     }
 
+    /**
+     * Confirm attendance for a registration.
+     */
     public function confirmAttendance(Request $request)
     {
         $registrationId = $request->input('registrationId');
@@ -224,5 +230,21 @@ class EventController extends Controller
         }
         $response = $this->frontEventController->markAttendance($registrationId);
         return $response;
+    }
+
+    /**
+     * Returns the ticket modal component view.
+     */
+    public function ticketModalComponent()
+    {
+        return view('backoffice.events.components.ticket-modal');
+    }
+
+    /**
+     * Returns the success modal component view.
+     */
+    public function successModalComponent()
+    {
+        return view('backoffice.events.components.success-modal');
     }
 }

@@ -54,4 +54,9 @@ Route::prefix('admin/backoffice')->name('backoffice.')->middleware('auth')->grou
          ->name('events.decode');
     Route::post('events/confirm', [BackofficeEventController::class, 'confirmAttendance'])
          ->name('events.confirm');
+
+    Route::get('/events/components/ticket-modal', [BackofficeEventController::class, 'ticketModalComponent'])
+        ->name('events.components.ticket-modal');
+    Route::get('/events/components/success-modal', [BackofficeEventController::class, 'successModalComponent'])
+        ->name('events.components.success-modal');
 });
