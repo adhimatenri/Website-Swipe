@@ -3,18 +3,23 @@ namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use chillerlan\QRCode\QRCode;
+use Carbon\Carbon;
 use App\Models\Event;
-use App\Models\EventRegistrations;
-use App\Models\EventAttendances;
-use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
-use Yajra\DataTables\Html\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Http\Controllers\Event\EventController as FrontEventController;
+use Illuminate\Support\Facades\Log;
+
 
 class EventController extends Controller
 {
-
+    protected $frontEventController;
+    public function __construct(FrontEventController $frontEventController)
+    {
+        $this->frontEventController = $frontEventController;
+    }
 
     public function data(Request $request)
     {
@@ -32,15 +37,12 @@ class EventController extends Controller
             ->make(true);
     }
     
-        
-
     public function index()
     {
         $events = Event::orderBy('datetime_start', 'desc')->paginate(9);
         return view('backoffice.events.index', compact('events'));
     }
     
-
     public function create()
     {
         return view('backoffice.events.create');
@@ -93,7 +95,6 @@ class EventController extends Controller
         return view('backoffice.events.edit', compact('event'));
     }
     
-
     public function update(Request $request, Event $event)
     {
         $request->validate([
@@ -173,14 +174,55 @@ class EventController extends Controller
     /**
      * Show barcode scan page.
      */
-    public function scan()
+    public function scanView()
     {
         return view('backoffice.events.scan');
     }
     
-    public function destroy(Event $event)
+        public function destroy(Event $event)
     {
         $event->delete();
         return response()->json(['success' => true]);
+    }
+
+    public function decodeBarcode(Request $request)
+    {
+        $request->validate(['image' => 'required']);
+        $base64Image = $request->input('image');
+
+        if (preg_match('/^data:image\/(\w+);base64,/', $base64Image, $type)) {
+            $imageData = base64_decode(substr($base64Image, strpos($base64Image, ',') + 1));
+        } else {
+            return response()->json(['error' => 'Invalid image data'], 400);
+        }
+
+        try {
+            $registrationId = (new QRCode)->readFromBlob($imageData)->data;
+            $response = $this->frontEventController->getAttendanceInfo($registrationId);
+            if ($response->isSuccessful()) {
+                $data = json_decode($response->getContent(), true);
+                $data['registrationId'] = $registrationId; 
+                return response()->json($data);
+            }
+
+            return $response;
+
+        } catch (\Exception $e) {
+            Log::error('Barcode decode failed: ' . $e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+            return response()->json(['error' => 'QR Code tidak valid atau data registrasi tidak ditemukan.'], 422);
+        }
+    }
+
+    public function confirmAttendance(Request $request)
+    {
+        $registrationId = $request->input('registrationId');
+        if (!$registrationId) {
+            return response()->json(['error' => 'Registration ID is required'], 400);
+        }
+        $response = $this->frontEventController->markAttendance($registrationId);
+        return $response;
     }
 }
