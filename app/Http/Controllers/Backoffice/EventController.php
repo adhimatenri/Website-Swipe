@@ -38,12 +38,23 @@ class EventController extends Controller
             ->make(true);
     }
     
-    public function index()
+  
+    
+    public function index(Request $request)
     {
-        $events = Event::orderBy('datetime_start', 'desc')->paginate(9);
+        $query = Event::query();
+
+        if ($request->filled('search')) {
+            $keyword = strtolower($request->search);
+            $query->whereRaw('LOWER(title) LIKE ?', ["%{$keyword}%"])
+                ->orWhereRaw('LOWER(description) LIKE ?', ["%{$keyword}%"]);
+        }
+
+        $events = $query->orderBy('datetime_start', 'desc')->paginate(9)->appends($request->only('search'));
+
         return view('backoffice.events.index', compact('events'));
     }
-    
+
     public function create()
     {
         return view('backoffice.events.create');
@@ -146,17 +157,14 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
     
-        // Hitung jumlah jamaah terdaftar
         $registered = DB::table('event_registrations')
             ->where('event_id', $id)
             ->count();
     
-        // Hitung jumlah jamaah hadir (ada di attendances)
         $attended = DB::table('event_attendances')
             ->where('event_id', $id)
             ->count();
     
-        // Data detail jamaah + kehadiran
         $registrations = DB::table('event_registrations as er')
             ->join('jamaah as j', 'er.jamaah_id', '=', 'j.id')
             ->leftJoin('event_attendances as ea', 'er.id', '=', 'ea.registration_id')
@@ -181,11 +189,14 @@ class EventController extends Controller
         return view('backoffice.events.scan');
     }
     
-        public function destroy(Event $event)
+    public function destroy(Event $event)
     {
         $event->delete();
-        return response()->json(['success' => true]);
+        return redirect()
+            ->route('backoffice.events.index')
+            ->with('success', 'Event berhasil dihapus.');
     }
+    
 
     /**
      * Decode the barcode from a base64 image.

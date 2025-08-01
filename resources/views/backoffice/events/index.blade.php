@@ -2,6 +2,25 @@
 @section('breadcrumb', 'Manajemen Event')
 
 @section('content')
+@if (session('success'))
+<div class="mb-4 w-full px-4 py-3 bg-white border-l-4 border-green-500 text-green-700 shadow-md rounded relative" role="alert">
+    <strong class="font-bold">Berhasil!</strong>
+    <span class="block sm:inline">{{ session('success') }}</span>
+    <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none';">
+        <span class="text-green-500 text-xl">&times;</span>
+    </button>
+</div>
+@endif
+
+@if (session('error'))
+<div class="mb-4 w-full px-4 py-3 bg-red-100 border border-red-400 text-red-700 rounded relative" role="alert">
+    <strong class="font-bold">Gagal!</strong>
+    <span class="block sm:inline">{{ session('error') }}</span>
+    <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none';">
+        <span class="text-red-700">&times;</span>
+    </button>
+</div>
+@endif
 <div class="w-full px-6 py-6 mx-auto">
     <div class="max-w-7xl mx-auto">
         <div class="bg-white shadow-soft-xl rounded-2xl p-6">
@@ -19,6 +38,19 @@
                 </div>
             </div><br>
     
+            <form method="GET" action="{{ route('backoffice.events.index') }}" class="mb-6">
+                <div class="flex gap-2 justify-end">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        value="{{ request('search') }}" 
+                        placeholder="Cari event..." 
+                        class="w-64 px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        Cari
+                    </button>
+                </div>
+            </form>
 
             <div class="flex flex-wrap -mx-3">
                 @foreach($events as $event)

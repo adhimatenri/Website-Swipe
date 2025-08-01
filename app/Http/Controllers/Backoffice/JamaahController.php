@@ -36,9 +36,28 @@ class JamaahController extends Controller
     
 
    
-    public function show(Jamaah $jamaah)
+    public function show($id)
     {
-        return view('backoffice.jamaah.show', compact('jamaah'));
+        $jamaah = Jamaah::findOrFail($id);
+    
+        $events = \DB::table('event_registrations as er')
+            ->join('events as e', 'e.id', '=', 'er.event_id')
+            ->leftJoin('event_attendances as ea', 'ea.registration_id', '=', 'er.id')
+            ->select(
+                'e.id as event_id',
+                'e.title as event_name',
+                'e.poster_url',
+                'er.createdAt as registered_at',
+                'ea.check_in_at'
+            )
+            ->where('er.jamaah_id', $id)
+            ->orderBy('er.createdAt', 'desc')
+            ->get();
+    
+        $jumlahEvent = $events->count();
+    
+        return view('backoffice.jamaah.show', compact('jamaah', 'events', 'jumlahEvent'));
     }
+    
    
 }

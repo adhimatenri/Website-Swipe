@@ -73,7 +73,14 @@
             </tr>
         </table>
         <div class="mt-8">
-          <h4 class="text-lg font-semibold mb-4">Data Jamaah</h4>
+                <div class="flex justify-between items-center mb-4">
+                  <h4 class="text-lg font-semibold">Data Jamaah</h4>
+                  <div>
+                      <button id="export_excel" class="px-4 py-2 bg-blue-500 text-gray rounded hover:bg-blue-600 text-sm">Export Excel</button>
+                      <button id="export_pdf" class="px-4 py-2 bg-blue-500 text-gray rounded hover:bg-blue-600 text-sm">Export PDF</button>
+                  </div>
+                </div>
+              
           <table id="registrationsTable" class="min-w-full bg-white border border-gray-200 rounded-lg">
               <thead>
                   <tr>
@@ -88,9 +95,9 @@
                 @foreach($registrations as $index => $reg)
                     <tr>
                         <td class="px-4 py-2 border">{{ $index + 1 }}</td>
-                        <td class="px-4 py-2 border">{{ $reg->name }}</td>  {{-- perbaikan --}}
+                        <td class="px-4 py-2 border">{{ $reg->name }}</td> 
                         <td class="px-4 py-2 border">{{ $reg->email }}</td>
-                        <td class="px-4 py-2 border">{{ $reg->phone }}</td> {{-- perbaikan --}}
+                        <td class="px-4 py-2 border">{{ $reg->phone }}</td>
                         <td class="px-4 py-2 border">{{ $reg->kehadiran }}</td>
                     </tr>
                 @endforeach
@@ -105,14 +112,40 @@
 </div>
 @endsection
 @push('scripts')
+<!-- DataTables Buttons -->
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+
 <script>
     $(document).ready(function () {
-        $('#registrationsTable').DataTable({
+        var table = $('#registrationsTable').DataTable({
             paging: true,
             searching: true,
             info: true,
-            responsive: true
+            responsive: true,
+            dom: 'frtip', // HAPUS "B" supaya tombol bawaan tidak muncul
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    title: 'Data_Jamaah_{{ $event->title }}'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Data_Jamaah_{{ $event->title }}',
+                    orientation: 'landscape',
+                    pageSize: 'A4'
+                }
+            ]
         });
+
+        // Trigger tombol custom
+        $('#export_excel').on('click', function() { table.button(0).trigger(); });
+        $('#export_pdf').on('click', function() { table.button(1).trigger(); });
     });
 </script>
+
 @endpush
