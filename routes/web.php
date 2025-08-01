@@ -44,9 +44,19 @@ Route::prefix('admin/backoffice')->name('backoffice.')->middleware('auth')->grou
     Route::resource('users', UserController::class)->names('users');
 
     Route::get('data', [BackofficeEventController::class, 'data'])->name('events.data');
-    Route::get('events/scan', [BackofficeEventController::class, 'scan'])->name('events.scan');
+    Route::get('events/scan', [BackofficeEventController::class, 'scanView'])->name('events.scan');
     Route::resource('events', BackofficeEventController::class)->names('events');
 
     Route::get('jamaah/data', [JamaahController::class, 'data'])->name('jamaah.data');
     Route::resource('jamaah', JamaahController::class)->names('jamaah');
+
+    Route::post('events/decode', [BackofficeEventController::class, 'decodeBarcode'])
+         ->name('events.decode');
+    Route::post('events/confirm', [BackofficeEventController::class, 'confirmAttendance'])
+         ->name('events.confirm');
+
+    Route::get('/events/components/ticket-modal', [BackofficeEventController::class, 'ticketModalComponent'])
+        ->name('events.components.ticket-modal');
+    Route::get('/events/components/success-modal', [BackofficeEventController::class, 'successModalComponent'])
+        ->name('events.components.success-modal');
 });
