@@ -1,10 +1,12 @@
 <div id="successful-registration-modal" 
      class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50 py-16 px-4 overflow-y-auto" 
-     x-data="{ open: false, registrationId: null }" 
+     x-data="{ open: false, registrationId: null, userName: '', userEmail: '' }" 
      x-show="open" 
      @successful-registration.window="
         open = true; 
         registrationId = $event.detail.registrationId;
+        userName = $event.detail.name || '';
+        userEmail = $event.detail.email || '';
         $store.qrcode.loadQrCode(registrationId);
      " 
      style="display: none;">
@@ -40,7 +42,17 @@
                         <i class="far fa-calendar-alt text-gray-500 mr-3"></i>
                         <div>
                             <p class="text-sm text-gray-500">Tanggal</p>
-                            <p class="font-semibold">{{ $event->datetime_start->format('d F Y') }}</p>
+                            @php
+                                $startDate = $event->datetime_start->format('d F Y');
+                                $endDate   = $event->datetime_end->format('d F Y');
+                            @endphp
+                            <p class="font-semibold">
+                                @if($event->datetime_start->isSameDay($event->datetime_end))
+                                    {{ $startDate }}
+                                @else
+                                    {{ $startDate }} - {{ $endDate }}
+                                @endif
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -49,14 +61,14 @@
                         <i class="far fa-envelope text-gray-500 mr-3"></i>
                         <div>
                             <p class="text-sm text-gray-500">Email</p>
-                            <p class="font-semibold">fulan@if.uai.ac.id</p>
+                            <p class="font-semibold" x-text="userEmail || 'Tidak tersedia'"></p>
                         </div>
                     </div>
                     <div class="flex items-center">
                         <i class="far fa-user text-gray-500 mr-3"></i>
                         <div>
                             <p class="text-sm text-gray-500">Nama Peserta</p>
-                            <p class="font-semibold">Fulan Bin Fulan</p>
+                            <p class="font-semibold" x-text="userName || 'Tidak tersedia'"></p>
                         </div>
                     </div>
                 </div>

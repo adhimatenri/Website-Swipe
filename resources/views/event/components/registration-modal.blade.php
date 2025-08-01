@@ -57,15 +57,21 @@
         // Handle AJAX submission
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
+            const formData = new FormData(form);
             const response = await fetch(form.action, {
                 method: 'POST',
                 headers: { 'Accept': 'application/json' },
-                body: new FormData(form),
+                body: formData,
             });
             if (response.ok) {
                 const data = await response.json();
+                const eventDetail = {
+                    ...data,
+                    name: formData.get('name'),
+                    email: formData.get('email')
+                };
                 window.dispatchEvent(new Event('close-modal'));
-                window.dispatchEvent(new CustomEvent('successful-registration', { detail: data }));
+                window.dispatchEvent(new CustomEvent('successful-registration', { detail: eventDetail }));
             }
         });
     });

@@ -4,7 +4,7 @@
     </a>
     <div class="p-4 sm:p-6 flex flex-col flex-1">
         <h2 class="font-bold text-xl mb-2">
-            <a href="{{ route('events.show', $event->slug) }}" class="hover:text-purple-600">{{ $event->title }}</a>
+            <a href="{{ route('events.show', $event->slug) }}" class="hover:text-yellow-500">{{ $event->title }}</a>
         </h2>
         <p class="text-gray-700 text-base mb-4">
             {{ Str::limit($event->description, 100) }}
@@ -17,7 +17,7 @@
                     <span class="text-blue-500"><i class="far fa-calendar-alt"></i> Terjadwal</span>
                 @endif
             </div>
-            <a href="{{ route('events.show', $event->slug) }}" class="mt-2 sm:mt-0 bg-purple-500 text-white font-bold py-2 px-4 rounded hover:bg-purple-600 text-center">
+            <a href="{{ route('events.show', $event->slug) }}" class="mt-2 sm:mt-0 bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded hover:bg-yellow-500 text-center">
                 Lihat
             </a>
         </div>

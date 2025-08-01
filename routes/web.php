@@ -32,7 +32,9 @@ Route::get('/debug-routes', function() {
 });
 
 Route::get('/', function () {
-    return redirect('/login');
+    return Auth::check()
+        ? redirect()->route('backoffice.dashboard')
+        : redirect()->route('login');
 });
 
 Route::prefix('admin/backoffice')->name('backoffice.')->middleware('auth')->group(function () {

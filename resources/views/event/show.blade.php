@@ -37,12 +37,22 @@
                     <div class="flex items-start">
                         <div class="text-2xl text-gray-600 mr-4"><i class="far fa-calendar-alt"></i></div>
                         <div>
-                            <h3 class="font-bold text-lg">Jadwal Kajian</h3>
-                            <p class="text-gray-700">Tanggal & Waktu: {{ $event->datetime_start->format('d F Y') }} - {{ $event->datetime_end->format('d F Y') }}, {{ $event->datetime_start->format('H:i') }} WIB</p>
+                            <h3 class="font-bold text-lg">Tanggal & Waktu:</h3>
+                            @php
+                                $startDate = $event->datetime_start->format('d F Y');
+                                $endDate   = $event->datetime_end->format('d F Y');
+                            @endphp
+                            <p class="text-gray-700">
+                                @if($event->datetime_start->isSameDay($event->datetime_end))
+                                    {{ $startDate }}, {{ $event->datetime_start->format('H:i') }} - {{ $event->datetime_end->format('H:i') }} WIB
+                                @else
+                                    {{ $startDate }} - {{ $endDate }}<br>{{ $event->datetime_start->format('H:i') }} - {{ $event->datetime_end->format('H:i') }} WIB
+                                @endif
+                            </p>
                         </div>
                     </div>
                     <div class="flex items-start mt-4">
-                        <div class="text-2xl text-gray-600 mr-4"><i class="far fa-map-marker-alt"></i></div>
+                        <div class="text-2xl text-gray-600 mr-4"><i class="fas fa-map-marker-alt"></i></div>
                         <div>
                             <h3 class="font-bold text-lg">Lokasi</h3>
                             <p class="text-gray-700">{{ $event->location }}</p>
