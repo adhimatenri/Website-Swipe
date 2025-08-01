@@ -59,8 +59,15 @@
           if (res.ok && payload.status === 'success') {
             window.stopScanning();
             window.showTicketModal(payload);
+          } else if (res.status === 422) {
+            console.log('No QR code detected, continuing scan...');
+
           } else if (payload.status === 'error') {
+            window.stopScanning();
             console.error('Scan error:', payload.message);
+            alert('Failed when scanning: ' + payload.message);
+            
+            setTimeout(() => window.startScanning(), 3000);
           }
         } catch (error) {
           console.error('Decode fetch error:', error);
@@ -85,19 +92,25 @@
           .then(html => {
             modalsContainer.innerHTML = html;
             
-            const eventDateStart = new Date(data.eventDetails.eventStart.date).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'});
-            const eventDateEnd = new Date(data.eventDetails.eventEnd.date).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'});
-            const birthDate = new Date(data.jamaahDetails.jamaahDob).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'});
-            
-            document.getElementById('eventTitle').textContent = data.eventDetails.eventTitle;
-            document.getElementById('eventTime').textContent = `${data.eventDetails.eventStart.time}-${data.eventDetails.eventEnd.time}`;
-            document.getElementById('eventDateStart').textContent = eventDateStart;
-            document.getElementById('eventDateEnd').textContent = eventDateEnd;
-            document.getElementById('jamaahName').textContent = data.jamaahDetails.jamaahName;
-            document.getElementById('jamaahDob').textContent = birthDate;
-            document.getElementById('jamaahPhone').textContent = data.jamaahDetails.jamaahPhone;
-            document.getElementById('jamaahEmail').textContent = data.jamaahDetails.jamaahEmail || 'Tidak tersedia';
-            document.getElementById('jamaahAddress').textContent = data.jamaahDetails.jamaahAddress;
+            const format = (iso) => new Date(iso)
+              .toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'});
+
+            const values = {
+              eventTitle:     data.eventDetails.eventTitle,
+              eventTime:      `${data.eventDetails.eventStart.time}-${data.eventDetails.eventEnd.time}`,
+              eventDateStart: format(data.eventDetails.eventStart.date),
+              eventDateEnd:   format(data.eventDetails.eventEnd.date),
+              jamaahName:     data.jamaahDetails.jamaahName,
+              jamaahDob:      format(data.jamaahDetails.jamaahDob),
+              jamaahPhone:    data.jamaahDetails.jamaahPhone || 'Tidak tersedia',
+              jamaahEmail:    data.jamaahDetails.jamaahEmail || 'Tidak tersedia',
+              jamaahAddress:  data.jamaahDetails.jamaahAddress || 'Tidak tersedia'
+            };
+
+            Object.entries(values).forEach(([id, text]) => {
+              const el = document.getElementById(id);
+              if (el) el.textContent = text;
+            });
             
             document.getElementById('confirmBtn').onclick = () => window.confirmAttendance(data.registrationId);
             document.getElementById('cancelBtn').onclick = () => {
@@ -145,7 +158,7 @@
         if (res.ok && payload.status === 'success') {
           window.showSuccessModal();
         } else {
-          alert('Konfirmasi gagal: ' + (payload.message || 'Unknown error'));
+          alert('Failed Confirmation: ' + (payload.message || 'Unknown error'));
           buttonsContainer.innerHTML = `
             <button id="confirmBtn" style="background: #FFCA28; padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; color: #333; border: none; cursor: pointer;">Konfirmasi</button>
             <button id="cancelBtn" style="background: #E2E8F0; padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; color: #333; margin-left: 0.75rem; border: none; cursor: pointer;">Batal</button>
@@ -158,7 +171,7 @@
         }
       } catch (error) {
         console.error('Confirm error:', error);
-        alert('Terjadi kesalahan saat konfirmasi.');
+        alert('An error occurred during confirmation.');
       }
     }
 
