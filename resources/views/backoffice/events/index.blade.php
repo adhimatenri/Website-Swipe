@@ -27,7 +27,7 @@
                         {{-- Gambar tipis sebagai header --}}
                         <div class="w-full h-12">
                             <img src="{{ $event->poster_url 
-                                ? asset('storage/' . $event->poster_url) 
+                                ? asset($event->poster_url) 
                                 : asset('admin/assets/img/login_design.png') }}" 
                                 alt="{{ $event->title }}"
                                 class="w-full h-full object-cover rounded-t-2xl">

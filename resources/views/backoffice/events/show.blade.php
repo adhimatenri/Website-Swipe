@@ -8,7 +8,7 @@
             <tr>
                 <td class="w-1/3 align-top">
                     <img src="{{ $event->poster_url 
-                        ? asset('storage/' . $event->poster_url) 
+                        ? asset($event->poster_url) 
                         : asset('admin/assets/img/login_design.png') }}" 
                         alt="{{ $event->title }}" 
                         class="w-full h-40 object-cover rounded-lg shadow">

@@ -73,7 +73,7 @@
                 <input type="file" id="poster" name="poster"
                        class="form-input block w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500">
                 @if($event->poster_url)
-                    <img src="{{ asset('storage/' . $event->poster_url) }}" alt="Poster Event" class="mt-2 w-40 h-auto rounded shadow">
+                    <img src="{{ asset($event->poster_url) }}" alt="Poster Event" class="mt-2 w-40 h-auto rounded shadow">
                 @endif
             </div>
 

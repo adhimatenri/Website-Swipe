@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Event\EventController as FrontEventController;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 
 class EventController extends Controller
@@ -64,6 +65,7 @@ class EventController extends Controller
 
         if ($request->hasFile('poster')) {
             $posterUrl = $request->file('poster')->store('posters', 'public');
+            $posterUrl = Storage::url($posterUrl);
         }
 
         $slug = Str::slug($request->title);
@@ -109,7 +111,7 @@ class EventController extends Controller
 
         if ($request->hasFile('poster')) {
             $posterUrl = $request->file('poster')->store('posters', 'public');
-            $event->poster_url = $posterUrl;
+            $event->poster_url = Storage::url($posterUrl);
         }
 
         // Only regenerate slug if title changed
